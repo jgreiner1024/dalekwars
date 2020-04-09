@@ -4,3 +4,5 @@
 # Builds
 *.apk
 *.unitypackage
+/DalekWarsGame/Assets/TextMesh Pro
+/DalekWarsGame/Assets/TextMesh Pro.meta
