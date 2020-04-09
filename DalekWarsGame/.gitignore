@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+#Text Mesh Pro stuff
+/DalekWarsGame/Assets/TextMesh Pro
+/DalekWarsGame/Assets/TextMesh Pro.meta
+
