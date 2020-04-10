@@ -1,6 +1,7 @@
 ﻿//no usings to avoid namepace class when used in unity and outside unity
 //all classes and such are fully qualified
 
+[System.Serializable]
 public class NeuralNetwork 
 {
     const float constantBiasDefaultValue = 0f;
@@ -133,9 +134,32 @@ public class NeuralNetwork
         }
     }
 
-    //inside Unity we can use the Unity Engine's range system
-    //outside of unity we need to use the normal .NET random
-    
+    //we technically don't need to save everything just the weights and layers, 
+    //but this is easier. 
+    public void Save(string path)
+    {
+        var file = System.IO.File.Exists(path) ? System.IO.File.OpenWrite(path) : System.IO.File.Create(path);
+        using (file)
+        {
+            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            binaryFormatter.Serialize(file, this);
+        }
+    }
 
+    public static NeuralNetwork Load(string path)
+    {
+        if (System.IO.File.Exists(path) == false)
+        {
+            UnityEngine.Debug.LogError($"Error Loading file {path} does not exist");
+            return null;
+        }
 
+        using (var file = System.IO.File.OpenRead(path))
+        {
+            var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            NeuralNetwork data = (NeuralNetwork)binaryFormatter.Deserialize(file);
+            return data;
+        }
+    }
 }
+

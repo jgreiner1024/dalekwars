@@ -10,6 +10,16 @@ namespace DalekWarsTrainer
     {
         static void Main(string[] args)
         {
+            int mapCount = 100;
+            int visibleRange = 5;
+            int generationCount = 100;
+            int dronesPerGeneration = 100;
+            int startingDroneEnergy = 32;
+
+
+            EvolutionTrainer trainer = new EvolutionTrainer();
+            NeuralNetwork trainedNeuralNetwork = trainer.Train(mapCount, visibleRange, generationCount, dronesPerGeneration, startingDroneEnergy);
+            trainedNeuralNetwork.Save($"DalekWars_{mapCount}_{generationCount}_{dronesPerGeneration}.dat");
         }
     }
 }
