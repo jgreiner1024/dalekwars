@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TextCrawlOpeningScene.unity
     guid: d48e0404000853b4687bf49f3ad8882c
+  - enabled: 1
+    path: Assets/Scenes/GameplayScene.unity
+    guid: b200eae8bd8961b469fe14c088e77ee1
   m_configObjects: {}
