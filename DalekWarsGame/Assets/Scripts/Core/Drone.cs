@@ -149,35 +149,38 @@ public class Drone
         return score;
     }
 
-    public void PerformAction(DroneAction action)
+    public bool PerformAction(DroneAction action)
     {
+        bool success = false;
         switch (action)
         {
             case DroneAction.MoveUp:
-                Move(Position + UP);
+                success = Move(Position + UP);
                 break;
             case DroneAction.MoveDown:
-                Move(Position + DOWN);
+                success = Move(Position + DOWN);
                 break;
             case DroneAction.MoveLeft:
-                Move(Position + LEFT);
+                success = Move(Position + LEFT);
                 break;
             case DroneAction.MoveRight:
-                Move(Position + RIGHT);
+                success = Move(Position + RIGHT);
                 break;
             case DroneAction.CollectUp:
-                CollectRock(Position + UP);
+                success = CollectRock(Position + UP);
                 break;
             case DroneAction.CollectDown:
-                CollectRock(Position + DOWN);
+                success = CollectRock(Position + DOWN);
                 break;
             case DroneAction.CollectLeft:
-                CollectRock(Position + LEFT);
+                success = CollectRock(Position + LEFT);
                 break;
             case DroneAction.CollectRight:
-                CollectRock(Position + RIGHT);
+                success = CollectRock(Position + RIGHT);
                 break;
         }
+
+        return success;
     }
 
     //returns true or false if we successfully moved

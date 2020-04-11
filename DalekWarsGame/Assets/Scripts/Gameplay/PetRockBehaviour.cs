@@ -5,7 +5,7 @@ using UnityEngine;
 public class PetRockBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private GameObject cellsObject;
+    private GameObject cellsObject = null;
     [SerializeField]
     private float explosionForce = 4f;
     [SerializeField]
