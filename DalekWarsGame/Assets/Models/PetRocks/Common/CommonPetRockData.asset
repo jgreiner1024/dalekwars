@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afca54441dec6bf4cbfc31756671f5ba, type: 3}
+  m_Name: CommonPetRockData
+  m_EditorClassIdentifier: 
+  petRockPrefab: {fileID: 392588624714227233, guid: 2b59c29e4cde6a34fbe7137bf7202652,
+    type: 3}
+  quantity: 16
+  value: 1
