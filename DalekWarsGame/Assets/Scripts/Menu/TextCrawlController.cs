@@ -148,6 +148,6 @@ public class TextCrawlController : MonoBehaviour
 
     private void MoveScene()
     {
-        SceneManager.LoadScene("MenuScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("GameplayScene", LoadSceneMode.Single);
     }
 }

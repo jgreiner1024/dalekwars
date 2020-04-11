@@ -20,7 +20,7 @@ public static class RockMap
                         availablePositions.Add(new Vector3(
                             startPosition.x + (mapx * chunkSize) + chunkx,
                             startPosition.y,
-                            startPosition.y + (mapz * chunkSize) + chunkz
+                            startPosition.z + (mapz * chunkSize) + chunkz
                         ));
                     }
                 }
