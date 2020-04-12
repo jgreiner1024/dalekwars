@@ -10,9 +10,9 @@ namespace DalekWarsTrainer
     {
         static void Main(string[] args)
         {
-            int mapCount = 100;
+            int mapCount = 20000;
             int visibleRange = 5;
-            int generationCount = 100;
+            int generationCount = 1000;
             int dronesPerGeneration = 100;
             int startingDroneEnergy = 32;
 
