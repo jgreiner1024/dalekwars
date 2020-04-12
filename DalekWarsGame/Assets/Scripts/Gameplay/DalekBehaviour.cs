@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class DalekBehaviour : MonoBehaviour
 {
     //transforms from the model/bones itself to allow for animation or position control
@@ -22,6 +22,12 @@ public class DalekBehaviour : MonoBehaviour
     [SerializeField]
     private float movementLerpSpeed = 2f;
 
+    [SerializeField]
+    private TextMeshProUGUI energyText;
+
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+
     //the core drone logic that this dalek utilizes
     private Drone drone;
 
@@ -34,6 +40,8 @@ public class DalekBehaviour : MonoBehaviour
         //drone must be set up in start, the rock map is set up in Awake
         //this ensures the rock map will always be completed first regardless of execution order.
         drone = new Drone(RockMapController.Instance.Map, 25);
+        energyText.text = drone.CurrentEnergy.ToString();
+        scoreText.text = "0";
     }
 
     public void PerformAction(DroneAction action)
@@ -100,6 +108,9 @@ public class DalekBehaviour : MonoBehaviour
         laserBullet.SetActive(false);
         //laserBeam.SetActive(false);
 
+        //update HUD
+        energyText.text = drone.CurrentEnergy.ToString();
+        scoreText.text = drone.GetTotalScore(false).ToString();
 
         isShooting = false;
     }
@@ -126,6 +137,9 @@ public class DalekBehaviour : MonoBehaviour
             yield return MoveToPosition(originalPosition, transform, movementLerpSpeed);
             yield return ShakeHead(20);
         }
+
+        //update HUD
+        energyText.text = drone.CurrentEnergy.ToString();
 
         //TODO: do something in the UI to show the player can move again
         isMoving = false;
