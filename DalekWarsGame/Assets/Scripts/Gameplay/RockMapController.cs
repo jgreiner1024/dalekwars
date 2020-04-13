@@ -23,10 +23,16 @@ public class RockMapController : MonoBehaviour
     //allow public access to the rock map through the singleton
     public Dictionary<Vector3, int> Map { get { return rockMap; } }
 
+    public float PercentLoaded { get; private set; }
+    public bool RocksLoaded { get; private set; }
+
     private void Awake()
     {
         //always re-assign the isntance to the latest created rock map controller
         Instance = this;
+
+        PercentLoaded = 0f;
+        RocksLoaded = false;
 
         //set up prefab by value index for easy access later
         prefabs = new Dictionary<int, GameObject>();
@@ -63,6 +69,8 @@ public class RockMapController : MonoBehaviour
     private IEnumerator SpawnRocksCoroutine()
     {
         //load rocks in order of value
+        float total = rockMap.Count;
+        float count = 0f;
         for(int i = 1; i <= 5; i++)
         {
             foreach (Vector3 rockPosition in rockMap.Keys)
@@ -73,15 +81,17 @@ public class RockMapController : MonoBehaviour
                     GameObject petRockObject = Instantiate<GameObject>(prefabs[value], transform);
                     petRockObject.transform.Rotate(0f, Random.Range(0f, 360f), 0f);
                     petRockObject.transform.position = rockPosition;
+                    count++;
+
+                    PercentLoaded = count / total;
                     yield return new WaitForSeconds(0.001f);
                 }
                 
             }
             
         }
-        
 
-        
+        RocksLoaded = true;
     }
     
     

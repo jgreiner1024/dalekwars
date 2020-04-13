@@ -44,6 +44,10 @@ public class TextCrawlController : MonoBehaviour
 
     private IEnumerator TextCrawlRoutine()
     {
+        //times used for animation timing to be more frame accurate
+        float elapsedTime = 0f;
+        float duration = 0f;
+
         introMusic.Play();
         Color introColor = introText.color;
         
@@ -51,27 +55,31 @@ public class TextCrawlController : MonoBehaviour
         introText.color = introColor;
         introCanvas.gameObject.SetActive(true);
 
+
         //fade in intro text
-        for (float a = 0; a <= 1; a += 0.01f)
+        duration = 1f;
+        for (elapsedTime = 0f; elapsedTime <= duration; elapsedTime += Time.deltaTime)
         {
-            introColor.a = a;
+            introColor.a = (elapsedTime / duration) * 1f; 
             introText.color = introColor;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForEndOfFrame();
         }
 
-        
-        yield return new WaitForSeconds(1.5f);
-
+        duration = 2.2f;
+        for (elapsedTime = 0f; elapsedTime <= duration; elapsedTime += Time.deltaTime)
+        {
+            yield return new WaitForEndOfFrame();
+        }
 
         float alpha = 1f;
         //fade out intro text
-        for (; alpha >= 0; alpha -= 0.01f)
+        duration = 1f;
+        for (elapsedTime = 0f; elapsedTime <= duration; elapsedTime += Time.deltaTime)
         {
-            introColor.a = alpha;
+            introColor.a = 1f - ((elapsedTime / duration) * 1f);
             introText.color = introColor;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForEndOfFrame();
         }
-
         introCanvas.gameObject.SetActive(false);
 
 
@@ -96,49 +104,52 @@ public class TextCrawlController : MonoBehaviour
         crawlCanvas.gameObject.SetActive(true);
 
         float ypos = 0;
-
-        //move logo away from the camera
-        for (float zpos = 0; zpos < 1000; zpos++)
+        duration = 10f;
+        float crawlDuration = 85.3f;
+        for (elapsedTime = 0f; elapsedTime <= (duration + 0.5f); elapsedTime += Time.deltaTime)
         {
-            logoPosition.z = zpos;
+            logoPosition.z = 1000 * (elapsedTime / duration);
             logoCanvas.transform.position = logoPosition;
-            
-            //fade out logo close to the end
-            if(zpos > 800)
+
+            //after 8 seconds start fading out for 2 seconds
+            if (elapsedTime > 8f)
             {
-                alpha -= 0.01f;
-                logoColor.a = alpha;
+                logoColor.a = 2f - (((elapsedTime - 8f) / (duration - 8f)) * 2f) ;
                 logoText.color = logoColor;
-
             }
 
-
-            if(zpos > 250)
+            //start moving the text crawl
+            if(elapsedTime > 2.5f)
             {
-                crawlPosition.y = ypos;
+                crawlPosition.y = ((elapsedTime - 2.5f) / crawlDuration) * 1700f;
                 crawlCanvas.transform.localPosition = crawlPosition;
-                ypos += 0.2f;
             }
 
-            yield return new WaitForSeconds(0.01f);
+            if(elapsedTime >= 10f && duration <= 10f)
+            {
+                duration = 2.5f + crawlDuration;
+                logoCanvas.gameObject.SetActive(false);
+            }
+
+            yield return new WaitForEndOfFrame();
         }
 
-        logoCanvas.gameObject.SetActive(false);
-
-
-        
-
-        
-
-        //move along the Y axis to move up the rotated game object away from the camera
-        for (; ypos < 1700; ypos += 0.25f)
-        {
-            crawlPosition.y = ypos;
-            crawlCanvas.transform.localPosition = crawlPosition;
-            yield return new WaitForSeconds(0.01f);
-        }
 
         crawlCanvas.gameObject.SetActive(false);
+
+
+
+        //continue moving the text crawl
+        //duration += 4.25f;
+        ////move along the Y axis to move up the rotated game object away from the camera
+        //for (; elapsedTime <= duration; elapsedTime += Time.deltaTime)
+        //{
+        //    crawlPosition.y = ypos;
+        //    crawlCanvas.transform.localPosition = crawlPosition;
+        //    yield return new WaitForSeconds(0.01f);
+        //}
+
+        
         
         //a small wait so we don't cut off the music
         yield return new WaitForSeconds(0.5f);
