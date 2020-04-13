@@ -13,11 +13,15 @@ public class DalekBehaviour : MonoBehaviour
     private Transform lower = null;
     [SerializeField]
     private Transform laserShot = null;
+    [SerializeField]
+    private AudioSource dalekLaserAudio;
 
     //laser bullet is used to trigger the colission on the pet rock
     //the collision is what triggers the pet rock to explode properly
     [SerializeField]
     private GameObject laserBullet = null;
+    [SerializeField]
+    private GameObject laserBeam = null;
 
     [SerializeField]
     private float movementLerpSpeed = 2f;
@@ -30,6 +34,7 @@ public class DalekBehaviour : MonoBehaviour
 
     //the core drone logic that this dalek utilizes
     private Drone drone;
+    
 
     //tracking the current state to prevent overlapping movements
     private bool isMoving = false;
@@ -90,23 +95,23 @@ public class DalekBehaviour : MonoBehaviour
         Vector3 direction = (position - transform.position).normalized;
         yield return RotateToDirection(direction, mid, movementLerpSpeed * 6);
 
-        //laserAudio.Play();
-        //yield return new WaitForSeconds(0.3f);
+        dalekLaserAudio.Play();
+        yield return new WaitForSeconds(0.3f);
 
         Vector3 laserEndPosition = new Vector3(position.x, 0.3f, position.z);
-        //TODO: spawn laser beam
-        //laserBeam.SetActive(true);
-        //LineRenderer renderer = laserBeam.GetComponent<LineRenderer>();
+        
+        laserBeam.SetActive(true);
+        LineRenderer renderer = laserBeam.GetComponent<LineRenderer>();
 
-        //renderer.SetPosition(0, laserShot.position);
-        //renderer.SetPosition(1, laserEndPosition);
+        renderer.SetPosition(0, laserShot.position);
+        renderer.SetPosition(1, laserEndPosition);
 
         laserBullet.SetActive(true);
         laserBullet.transform.position = laserShot.position;
         yield return MoveToPosition(laserEndPosition, laserBullet.transform, movementLerpSpeed * 3);
 
         laserBullet.SetActive(false);
-        //laserBeam.SetActive(false);
+        laserBeam.SetActive(false);
 
         //update HUD
         energyText.text = drone.CurrentEnergy.ToString();
